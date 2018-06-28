@@ -4,10 +4,10 @@ export const state = () => ({
 })
 
 export const mutations = {
-  toggleSidebar (state) {
+  toggleSidebar(state) {
     state.sidebar = !state.sidebar
   },
-  pushRepoList (repoList) {
+  pushRepoList(repoList) {
     state.repoList.push(repoList)
   }
 }

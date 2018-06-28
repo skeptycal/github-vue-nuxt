@@ -1,6 +1,5 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-Vue.use(Vuex)
+import Vuex from "vuex"
+import gitHubAPI from "~/plugins/gitHubAPI"
 
 const state = {
   sidebar: false,
@@ -14,14 +13,30 @@ const state = {
 }
 
 const getters = {
-  sidebar: function () { return state.sidebar },
-  repoList: function () { return state.repoList },
-  currentSearchTerm: function () { return state.currentSearchTerm },
-  resultsCountForTerm: function () { return state.resultsCountForTerm },
-  searchInProgress: function () { return state.searchInProgress },
-  requestedPage: function () { return state.requestedPage },
-  repoInformation: function () { return state.repoInformation },
-  browseRepoList: function () { return state.browseRepoList }
+  sidebar: function() {
+    return state.sidebar
+  },
+  repoList: function() {
+    return state.repoList
+  },
+  currentSearchTerm: function() {
+    return state.currentSearchTerm
+  },
+  resultsCountForTerm: function() {
+    return state.resultsCountForTerm
+  },
+  searchInProgress: function() {
+    return state.searchInProgress
+  },
+  requestedPage: function() {
+    return state.requestedPage
+  },
+  repoInformation: function() {
+    return state.repoInformation
+  },
+  browseRepoList: function() {
+    return state.browseRepoList
+  }
 }
 
 const mutations = {
@@ -31,7 +46,7 @@ const mutations = {
   updateCurrentSearchTerm: (state, payload) => {
     state.currentSearchTerm = payload
   },
-  toggleSidebar: (state, payload) => {
+  toggleSidebar: state => {
     state.sidebar = !state.sidebar
   },
   updateResultsCountForTerm: (state, payload) => {
@@ -44,7 +59,15 @@ const mutations = {
     state.requestedPage = payload
   },
   updateRepoInformation: (state, payload) => {
-    state.repoInformation = payload
+    state.repoInformation = {
+      name: payload.name,
+      description: payload.description,
+      forks_count: payload.forks_count,
+      stargazers_count: payload.stargazers_count,
+      subscribers_count: payload.subscribers_count,
+      topics: payload.topics,
+      html_url: payload.html_url
+    }
   },
   updateBrowseRepoList: (state, payload) => {
     state.browseRepoList = payload
@@ -53,28 +76,35 @@ const mutations = {
 
 const actions = {
   pushRepoList: (context, payload) => {
-    context.commit('updateRepoList', payload)
+    context.commit("updateRepoList", payload)
   },
   updateCurrentSearchTerm: (context, payload) => {
-    context.commit('updateCurrentSearchTerm', payload)
+    context.commit("updateCurrentSearchTerm", payload)
   },
   toggleSidebar: (context, payload) => {
-    context.commit('toggleSidebar', payload)
+    context.commit("toggleSidebar", payload)
   },
   updateResultsCountForTerm: (context, payload) => {
-    context.commit('updateResultsCountForTerm', payload)
+    context.commit("updateResultsCountForTerm", payload)
   },
   updateSearchInProgress: (context, payload) => {
-    context.commit('updateSearchInProgress', payload)
+    context.commit("updateSearchInProgress", payload)
   },
   updateRequestedPage: (context, payload) => {
-    context.commit('updateRequestedPage', payload)
+    context.commit("updateRequestedPage", payload)
   },
   updateRepoInformation: (context, payload) => {
-    context.commit('updateRepoInformation', payload)
+    context.commit("updateRepoInformation", payload)
   },
   updateBrowseRepoList: (context, payload) => {
-    context.commit('updateBrowseRepoList', payload)
+    context.commit("updateBrowseRepoList", payload)
+  },
+  loadRepositoryInformationFromAPI: async function({ commit }, repoID) {
+    await gitHubAPI.repoInformationFromID(repoID).then(function(res) {
+      return commit("updateRepoInformation", {
+        ...res.data
+      })
+    })
   }
 }
 
