@@ -1,5 +1,5 @@
-import Vuex from "vuex"
-import gitHubAPI from "~/plugins/gitHubAPI"
+import Vuex from "vuex";
+import gitHubAPI from "~/plugins/gitHubAPI";
 
 const state = {
   sidebar: false,
@@ -10,53 +10,53 @@ const state = {
   requestedPage: 1,
   repoInformation: {},
   browseRepoList: []
-}
+};
 
 const getters = {
   sidebar: function() {
-    return state.sidebar
+    return state.sidebar;
   },
   repoList: function() {
-    return state.repoList
+    return state.repoList;
   },
   currentSearchTerm: function() {
-    return state.currentSearchTerm
+    return state.currentSearchTerm;
   },
   resultsCountForTerm: function() {
-    return state.resultsCountForTerm
+    return state.resultsCountForTerm;
   },
   searchInProgress: function() {
-    return state.searchInProgress
+    return state.searchInProgress;
   },
   requestedPage: function() {
-    return state.requestedPage
+    return state.requestedPage;
   },
   repoInformation: function() {
-    return state.repoInformation
+    return state.repoInformation;
   },
   browseRepoList: function() {
-    return state.browseRepoList
+    return state.browseRepoList;
   }
-}
+};
 
 const mutations = {
   updateRepoList: (state, payload) => {
-    state.repoList = payload
+    state.repoList = payload;
   },
   updateCurrentSearchTerm: (state, payload) => {
-    state.currentSearchTerm = payload
+    state.currentSearchTerm = payload;
   },
   toggleSidebar: state => {
-    state.sidebar = !state.sidebar
+    state.sidebar = !state.sidebar;
   },
   updateResultsCountForTerm: (state, payload) => {
-    state.resultsCountForTerm = parseInt(payload)
+    state.resultsCountForTerm = parseInt(payload);
   },
   updateSearchInProgress: (state, payload) => {
-    state.searchInProgress = payload
+    state.searchInProgress = payload;
   },
   updateRequestedPage: (state, payload) => {
-    state.requestedPage = payload
+    state.requestedPage = payload;
   },
   updateRepoInformation: (state, payload) => {
     state.repoInformation = {
@@ -67,46 +67,46 @@ const mutations = {
       subscribers_count: payload.subscribers_count,
       topics: payload.topics,
       html_url: payload.html_url
-    }
+    };
   },
   updateBrowseRepoList: (state, payload) => {
-    state.browseRepoList = payload
+    state.browseRepoList = payload;
   }
-}
+};
 
 const actions = {
   pushRepoList: (context, payload) => {
-    context.commit("updateRepoList", payload)
+    context.commit("updateRepoList", payload);
   },
   updateCurrentSearchTerm: (context, payload) => {
-    context.commit("updateCurrentSearchTerm", payload)
+    context.commit("updateCurrentSearchTerm", payload);
   },
   toggleSidebar: (context, payload) => {
-    context.commit("toggleSidebar", payload)
+    context.commit("toggleSidebar", payload);
   },
   updateResultsCountForTerm: (context, payload) => {
-    context.commit("updateResultsCountForTerm", payload)
+    context.commit("updateResultsCountForTerm", payload);
   },
   updateSearchInProgress: (context, payload) => {
-    context.commit("updateSearchInProgress", payload)
+    context.commit("updateSearchInProgress", payload);
   },
   updateRequestedPage: (context, payload) => {
-    context.commit("updateRequestedPage", payload)
+    context.commit("updateRequestedPage", payload);
   },
   updateRepoInformation: (context, payload) => {
-    context.commit("updateRepoInformation", payload)
+    context.commit("updateRepoInformation", payload);
   },
   updateBrowseRepoList: (context, payload) => {
-    context.commit("updateBrowseRepoList", payload)
+    context.commit("updateBrowseRepoList", payload);
   },
   loadRepositoryInformationFromAPI: async function({ commit }, repoID) {
     await gitHubAPI.repoInformationFromID(repoID).then(function(res) {
       return commit("updateRepoInformation", {
         ...res.data
-      })
-    })
+      });
+    });
   }
-}
+};
 
 const store = () => {
   return new Vuex.Store({
@@ -114,7 +114,7 @@ const store = () => {
     getters: getters,
     mutations: mutations,
     actions: actions
-  })
-}
+  });
+};
 
-export default store
+export default store;
