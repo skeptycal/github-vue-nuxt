@@ -52,31 +52,31 @@
 </template>
 
 <style>
-  .footer {
-    padding-left: 30px;
-  }
-  .titlebar-icon {
-    margin-left: 50px;
-  }
+.footer {
+  padding-left: 30px;
+}
+.titlebar-icon {
+  margin-left: 50px;
+}
 </style>
 
 <script>
-  import "font-awesome/css/font-awesome.css";
-  export default {
-    data() {
-      return {
-        clipped: false,
-        drawer: false,
-        fixed: false,
-        items: [
-          { icon: "search", title: "Search", to: "/" },
-          { icon: "list", title: "Browse", to: "/repos" }
-        ],
-        miniVariant: false,
-        right: true,
-        rightDrawer: false,
-        title: "Github Preview SPA"
-      };
-    }
-  };
+import "font-awesome/css/font-awesome.css";
+export default {
+  data() {
+    return {
+      clipped: false,
+      drawer: false,
+      fixed: false,
+      items: [
+        { icon: "search", title: "Search", to: "/" },
+        { icon: "list", title: "Browse", to: "/repos" }
+      ],
+      miniVariant: false,
+      right: true,
+      rightDrawer: false,
+      title: "Github Preview SPA"
+    };
+  }
+};
 </script>
