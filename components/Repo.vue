@@ -65,39 +65,39 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      repoInformation: {
-        type: Object,
-        required: true
-      }
+export default {
+  props: {
+    repoInformation: {
+      type: Object,
+      required: true
     }
-  };
+  }
+};
 </script>
 
 <style>
-  #repoInfoCard {
-    min-width: 40%;
-    max-width: 80%;
-    padding: 15px;
-    border: 1px solid black;
-  }
-  .chip {
-    min-width: 80px;
-  }
-  #card-title {
-    font-weight: bolder;
-    font-size: 160%;
-  }
-  .github-link {
-    text-decoration: none;
-  }
-  #topic-desc-divider {
-    background-color: #262626;
-    margin-top: 10px;
-  }
-  .fa {
-    /* FA icon color */
-    color: #212121;
-  }
+#repoInfoCard {
+  min-width: 40%;
+  max-width: 80%;
+  padding: 15px;
+  border: 1px solid black;
+}
+.chip {
+  min-width: 80px;
+}
+#card-title {
+  font-weight: bolder;
+  font-size: 160%;
+}
+.github-link {
+  text-decoration: none;
+}
+#topic-desc-divider {
+  background-color: #262626;
+  margin-top: 10px;
+}
+.fa {
+  /* FA icon color */
+  color: #212121;
+}
 </style>
