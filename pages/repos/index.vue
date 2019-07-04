@@ -1,12 +1,13 @@
 <template>
   <v-layout>
     <v-flex>
-      <v-data-table :headers="headers"
-                    :items="browseRepoList"
-                    :rows-per-page-items="[10]"
-                    @update:pagination="getResultsIfLastPage">
-        <template slot="headerCell"
-                  scope="props">
+      <v-data-table
+        :headers="headers"
+        :items="browseRepoList"
+        :rows-per-page-items="[10]"
+        @update:pagination="getResultsIfLastPage"
+      >
+        <template slot="headerCell" scope="props">
           <v-tooltip bottom>
             <span slot="activator">
               {{ props.header.text }}
@@ -16,9 +17,11 @@
             </span>
           </v-tooltip>
         </template>
-        <template slot="items"
-                  scope="props"
-                  @click.native="$router.go(`/repos/${props.item.id}`)">
+        <template
+          slot="items"
+          scope="props"
+          @click.native="$router.go(`/repos/${props.item.id}`)"
+        >
           <td>{{ props.item.name }}</td>
           <td>{{ props.item.owner.login }}</td>
           <td>{{ props.item.description }}</td>
@@ -32,14 +35,14 @@
 </template>
 
 <script>
-import gitHubAPI from "~/plugins/gitHubAPI"
-import store from "~/store"
+import gitHubAPI from "~/plugins/gitHubAPI";
+import store from "~/store";
 // import { mapGetters } from 'vuex'
 
-const theStore = store()
+const theStore = store();
 
 // An example where I am not sure if using the store is needed
-let nextSince = 0
+let nextSince = 0;
 
 export default {
   data() {
@@ -49,17 +52,17 @@ export default {
         { text: "Owner", sortable: false },
         { text: "Description", sortable: false, align: "left" }
       ]
-    }
+    };
   },
   computed: {
     browseRepoList() {
       if (theStore.getters.browseRepoList.length < 1) {
-        this.loadRepositories(nextSince)
+        this.loadRepositories(nextSince);
       }
-      return theStore.getters.browseRepoList
+      return theStore.getters.browseRepoList;
     },
     pages() {
-      return this.pagination
+      return this.pagination;
     }
   },
   methods: {
@@ -68,34 +71,34 @@ export default {
         theStore.getters.browseRepoList.length / event.rowsPerPage ===
         event.page
       ) {
-        this.loadRepositories(nextSince, true)
+        this.loadRepositories(nextSince, true);
       }
     },
     loadRepositories(sinceID, isConcat) {
       const params = {
         since: sinceID
-      }
+      };
 
       gitHubAPI.fetchRepositories(
         params,
         function(response) {
           // success
-          nextSince = response.headers.nextSince
+          nextSince = response.headers.nextSince;
           if (isConcat) {
-            let currentRepoList = theStore.getters.browseRepoList
+            let currentRepoList = theStore.getters.browseRepoList;
             theStore.commit(
               "updateBrowseRepoList",
               currentRepoList.concat(response.data)
-            )
-            return
+            );
+            return;
           }
-          theStore.commit("updateBrowseRepoList", response.data)
+          theStore.commit("updateBrowseRepoList", response.data);
         },
         function() {
           // fail
         }
-      )
+      );
     }
   }
-}
+};
 </script>
